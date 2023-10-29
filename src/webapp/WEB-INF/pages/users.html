@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>User list:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Action</th>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    <tr th:each="user : ${listUsers}">
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getPassword()}"></td>
+        <td>
+            <form th:method="POST" th:action="@{/delete(id=${user.getId()})}">
+                <input type="submit" class="buttonDelete" value="Delete"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/edit}">
+                <input type="hidden" name="id" th:value="${user.getId()}" />
+                <input type="submit" class="buttonEdit" value="Edit"/>
+            </form>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a class="create-link" href="/new">Create New User</a>
+
+</body>
+</html>
